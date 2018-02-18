@@ -51,13 +51,25 @@
 		echo '<script type="text/javascript" src="scouter.js"></script>';
 		
 		if (!$_GET["team"] == '') {
+
+			//I didn't feel like getting rid of it, so I just hid it.
+			//Change to false to get back
+			if (true) {
+				$box_style = ' style="display: none"';
+				$break = '';
+			}
+			else{
+				$box_style = '';
+				$break = '<br>';
+			}			
+					
 			if (!file_exists($modifier . "data.txt")) {
 				$new_data_file = fopen($modifier . "data.txt", "w");
 				fclose($new_data_file);
 			}
 			$data_file = fopen($modifier . "data.txt", "r") or die("File not found.");
 			echo '<p><img src = "' . $modifier . '/image" width = "450" height = "300"/></p>';
-			echo '<h1>Scouting:</h1>';
+			echo '<h1' . $box_style . '>Scouting:</h1>';
 			
 			function getBetweenStrings($string, $start, $end){
 				$string = ' ' . $string;
@@ -163,11 +175,11 @@
 						fwrite($data, $value . "<@J@a@k@e@><@P@e@v@e@r@l@y@>\n");
 						fclose($data);
 				}
-				echo '<p>' . $value . ':</p>';
-				echo '<textarea rows="10" cols="100" name="' .  $value . '" id="' . $value . '">' . getData($value, $modifier . "data.txt") . '</textarea>';
+				echo '<p' . $box_style . '>' . $value . ':</p>';
+				echo '<textarea rows="10" cols="100" name="' .  $value . '" id="' . $value . '"' . $box_style . '>' . getData($value, $modifier . "data.txt") . '</textarea>';
 			}
-			echo "<br>";
-			echo "<h1>Pit Scouting:</h1>";
+			echo $break;
+			echo '<h1' . $box_style . '>Pit Scouting:</h1>';
 			$pitquestions = explode("<@Z@>", getData("PitTextboxes", $modifier . "../../../../template.txt"));
 			foreach($pitquestions as $value){
 				if (strpos(file_get_contents($modifier . "data.txt"), $value . "<@J@a@k@e@>") === false) {
@@ -175,10 +187,10 @@
 						fwrite($data, $value . "<@J@a@k@e@><@P@e@v@e@r@l@y@>\n");
 						fclose($data);
 				}
-				echo '<p>' . $value . '</p>';
-				echo '<textarea rows="10" cols="100" name="' .  $value . '" id="' . $value . '">' . getData($value, $modifier . "data.txt") . '</textarea>';
+				echo '<p' . $box_style . '>' . $value . '</p>';
+				echo '<textarea rows="10" cols="100" name="' .  $value . '" id="' . $value . '"' . $box_style . '>' . getData($value, $modifier . "data.txt") . '</textarea>';
 			}
-			echo "<br>";
+			echo $break;
 			
 			if (!$_GET["team"] == '') {
 				echo '<input id="robot_toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleRoboToolbox();"/>';
