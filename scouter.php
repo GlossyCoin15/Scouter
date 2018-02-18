@@ -68,7 +68,7 @@
 				fclose($new_data_file);
 			}
 			$data_file = fopen($modifier . "data.txt", "r") or die("File not found.");
-			echo '<p><img src = "' . $modifier . '/image" width = "450" height = "300"/></p>';
+			echo '<table border="10"><tr><td><img src = "' . $modifier . '/image" width = "450" height = "300"/></td></tr></table>';
 			echo '<h1' . $box_style . '>Scouting:</h1>';
 			
 			function getBetweenStrings($string, $start, $end){
