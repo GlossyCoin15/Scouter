@@ -30,6 +30,20 @@ function toggleRoboToolbox() {
 	}
 }
 
+function toggleTextboxes() {
+	var toolbox_elements = document.getElementsByClassName("questions_div");
+	if (toolbox_elements[0].style.display == '') {
+		for(var i = 0; i < toolbox_elements.length; i++) {
+			toolbox_elements[i].style.display = 'none';
+		}
+	}
+	else if (toolbox_elements[0].style.display == 'none') {
+		for(var i = 0; i < toolbox_elements.length; i++) {
+			toolbox_elements[i].style.display = '';
+		}
+	}
+}
+
 function uploadImage() {
 	var path = document.getElementsByTagName("body")[0].getAttribute("path");
 	var base_link = document.getElementsByTagName("body")[0].getAttribute("base_link").replace(/&/g , "@J@a@k@e@");

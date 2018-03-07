@@ -70,6 +70,8 @@ elseif ($_GET["type"] == "add_match") {
 elseif ($_GET["type"] == "update") {
 	$data_array = array();
 	foreach ($_POST as $key => $value) {
+		$value = preg_replace("/\r/", "", $value);
+		$value = preg_replace("/\n/", "<:BR:>", $value);
 		if (strpos($key, '::') !== false) {
 			$box_number = explode("::", $key)[0];
 			$box_type = explode("::", $key)[1];

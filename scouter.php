@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<title>Jake's Scouter</title>
-		<base href = "http://localhost:8000/">
+		<?php echo '<base href = "http://' . $_SERVER['HTTP_HOST'] . '/">'; ?>
 	</head>
 	<?php
 	$modifier = "";
@@ -50,18 +50,7 @@
 	echo '<body bgcolor=white path="' . $modifier . '" base_link="' . $_SERVER['REQUEST_URI'] . '">';
 		echo '<script type="text/javascript" src="scouter.js"></script>';
 		
-		if (!$_GET["team"] == '') {
-
-			//I didn't feel like getting rid of it, so I just hid it.
-			//Change to false to get back
-			if (true) {
-				$box_style = ' style="display: none"';
-				$break = '';
-			}
-			else{
-				$box_style = '';
-				$break = '<br>';
-			}			
+		if (!$_GET["team"] == '') {		
 					
 			if (!file_exists($modifier . "data.txt")) {
 				$new_data_file = fopen($modifier . "data.txt", "w");
@@ -69,7 +58,6 @@
 			}
 			$data_file = fopen($modifier . "data.txt", "r") or die("File not found.");
 			echo '<table border="10"><tr><td><img src = "' . $modifier . '/image" width = "450" height = "300"/></td></tr></table>';
-			echo '<h1' . $box_style . '>Scouting:</h1>';
 			
 			function getBetweenStrings($string, $start, $end){
 				$string = ' ' . $string;
@@ -167,30 +155,6 @@
 					$division = false;
 				}
 			echo '</table>';
-
-			$questions = explode("<@Z@>", getData("Textboxes", $modifier . "../../../../template.txt"));
-			foreach($questions as $value){
-				if (strpos(file_get_contents($modifier . "data.txt"), $value . "<@J@a@k@e@>") === false) {
-						$data = fopen($modifier . "data.txt", "a") or die("Unable to open file!");
-						fwrite($data, $value . "<@J@a@k@e@><@P@e@v@e@r@l@y@>\n");
-						fclose($data);
-				}
-				echo '<p' . $box_style . '>' . $value . ':</p>';
-				echo '<textarea rows="10" cols="100" name="' .  $value . '" id="' . $value . '"' . $box_style . '>' . getData($value, $modifier . "data.txt") . '</textarea>';
-			}
-			echo $break;
-			echo '<h1' . $box_style . '>Pit Scouting:</h1>';
-			$pitquestions = explode("<@Z@>", getData("PitTextboxes", $modifier . "../../../../template.txt"));
-			foreach($pitquestions as $value){
-				if (strpos(file_get_contents($modifier . "data.txt"), $value . "<@J@a@k@e@>") === false) {
-						$data = fopen($modifier . "data.txt", "a") or die("Unable to open file!");
-						fwrite($data, $value . "<@J@a@k@e@><@P@e@v@e@r@l@y@>\n");
-						fclose($data);
-				}
-				echo '<p' . $box_style . '>' . $value . '</p>';
-				echo '<textarea rows="10" cols="100" name="' .  $value . '" id="' . $value . '"' . $box_style . '>' . getData($value, $modifier . "data.txt") . '</textarea>';
-			}
-			echo $break;
 			
 			if (!$_GET["team"] == '') {
 				echo '<input id="robot_toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleRoboToolbox();"/>';
@@ -222,8 +186,36 @@
 					<input type="submit" class="delete" value="Delete Selected Match" onclick="return deleteMatch();"/>
 				</form></td></tr>
 				';
+				
+				echo '<tr><td><input id="toggle_textboxes_button" type="button" value="Toggle Textboxes" onclick="toggleTextboxes();"/></td></tr>';
 
 			echo '</table>';		
+			
+			echo '<div class="questions_div" style="display: none">';
+			echo '<h1>Scouting:</h1>';
+			$questions = explode("<@Z@>", getData("Textboxes", $modifier . "../../../../template.txt"));
+			foreach($questions as $value){
+				if (strpos(file_get_contents($modifier . "data.txt"), $value . "<@J@a@k@e@>") === false) {
+						$data = fopen($modifier . "data.txt", "a") or die("Unable to open file!");
+						fwrite($data, $value . "<@J@a@k@e@><@P@e@v@e@r@l@y@>\n");
+						fclose($data);
+				}
+				echo '<p>' . $value . ':</p>';
+				echo '<textarea rows="10" cols="100" form="updater" name="' .  $value . '" id="' . $value . '">' . preg_replace("/<:BR:>/", "\n", getData($value, $modifier . "data.txt")) . '</textarea>';
+			}
+			echo '<br>';
+			echo '<h1>Pit Scouting:</h1>';
+			$pitquestions = explode("<@Z@>", getData("PitTextboxes", $modifier . "../../../../template.txt"));
+			foreach($pitquestions as $value){
+				if (strpos(file_get_contents($modifier . "data.txt"), $value . "<@J@a@k@e@>") === false) {
+						$data = fopen($modifier . "data.txt", "a") or die("Unable to open file!");
+						fwrite($data, $value . "<@J@a@k@e@><@P@e@v@e@r@l@y@>\n");
+						fclose($data);
+				}
+				echo '<p>' . $value . '</p>';
+				echo '<textarea rows="10" cols="100" form="updater" name="' .  $value . '" id="' . $value . '">' . preg_replace("/<:BR:>/", "\n", getData($value, $modifier . "data.txt")) . '</textarea>';
+			}
+			echo '</div>';
 			
 			fclose($data_file);
 		}
