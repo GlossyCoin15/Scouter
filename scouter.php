@@ -157,22 +157,22 @@
 			echo '</table>';
 			
 			if (!$_GET["team"] == '') {
-				echo '<input id="robot_toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleRoboToolbox();"/>';
+				echo '<input id="robot_toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleElement(\'robo_toolbox\');"/>';
 			}
 			else {
-				echo '<input id="robot_toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleRoboToolbox("robo_toolbox");" style="display: none"/>';
+				echo '<input id="robot_toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleElement(\'robo_toolbox\');" style="display: none"/>';
 			}	
 			//Toolbox
 			echo '<table border="10" class="robo_toolbox" style="display: none">
 
 				<tr><td>';
-				echo '<input type="submit" value="Upload Boxes" onclick="updateBoxes();">';
+				echo '<input type="submit" value="Upload Boxes" onclick="addElement(\'updater\', \'update\', \'robot\');">';
 				echo '</form>
 				</tr></td>
 
 				<tr><td><form id="match_adder" action="robot.php" method="post">
 					Input new Match: <input type="text" name="number">
-					<input type="submit" onclick="addMatch();">
+					<input type="submit" onclick="addElement(\'match_adder\', \'add_match\', \'robot\');">
 				</form></td></tr>';
 
 				echo '<tr><td>Selected Match: <select id="match_selector">';
@@ -183,11 +183,11 @@
 				echo '</select></td>
 				
 				<tr><td><form id="match_deleter" action="robot.php" method="post">
-					<input type="submit" class="delete" value="Delete Selected Match" onclick="return deleteMatch();"/>
+					<input type="submit" class="delete" value="Delete Selected Match" onclick="return deleteElement(\'match_selector\', \'match_deleter\', \'robot\', \'delete_match\', \'match\');"/>
 				</form></td></tr>
 				';
 				
-				echo '<tr><td><input id="toggle_textboxes_button" type="button" value="Toggle Textboxes" onclick="toggleTextboxes();"/></td></tr>';
+				echo '<tr><td><input id="toggle_textboxes_button" type="button" value="Toggle Textboxes" onclick="toggleElement(\'questions_div\');"/></td></tr>';
 
 			echo '</table>';		
 			
@@ -246,16 +246,16 @@
 		}
 		
 		if ($_GET["team"] == '') {
-			echo '<input id="toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleToolbox();"/>';
+			echo '<input id="toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleElement(\'toolbox\');"/>';
 		}
 		else {
-			echo '<input id="toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleToolbox();" style="display: none"/>';
+			echo '<input id="toolbox_button" type="button" value="Toggle Toolbox" onclick="toggleElement(\'toolbox\');" style="display: none"/>';
 		}
 		?>
 		<table border="10" class="toolbox" style="display: none">
 			<tr><td><form id="list_element_adder" action="list.php" method="post">
 				Input new List Element: <input type="text" name="name">
-				<input type="submit" onclick="addListElement();">
+				<input type="submit" onclick="addElement('list_element_adder', 'add', 'list');">
 			</form></td></tr>
 			<tr><td>Selected Element: <select id="selector">
 				<?php
@@ -275,10 +275,10 @@
 				<input type="submit" value="Upload Image" name="submit" onclick="uploadImage();">
 			</form>
 			<form id="image_deleter" action="image.php" method="post">
-				<input type="submit" class="delete" value="Delete Image" onclick="return deleteImage();"/>
+				<input type="submit" class="delete" value="Delete Image" onclick="return deleteElement('selector', 'image_deleter', 'image', 'delete', 'foobar');"/>
 			</form></td></tr>
 			<tr><td><form id="list_element_deleter" action="list.php" method="post">
-				<input type="submit" class="delete" value="Delete Selected List Element" onclick="return deleteListElement();"/>
+				<input type="submit" class="delete" value="Delete Selected List Element" onclick="return deleteElement('selector', 'list_element_deleter', 'list', 'delete', 'string');"/>
 			</form></td></tr>
 		</table>
 	</body>
